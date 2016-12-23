@@ -18,6 +18,7 @@ void setup() {
 
   // tamaño pantalla
   size(500, 500);
+  raqPosy = height -30;
 }
 
 
@@ -31,7 +32,8 @@ void draw() {
   fill(255, 255, 255);
 
   // Recta de la raqueta
-  rect(mouseX-raqLargo/2, height-30, raqLargo, 10);
+  rectMode(CENTER);  // Set rectMode to CENTER
+  rect(mouseX, height-30, raqLargo, 10);
 
 
   if (gameStart) {
@@ -42,9 +44,10 @@ void draw() {
 
 
     // Si pelota toca la raqueta, cambiar dirección de Y
-    if ( bolaPosy > height-30 && bolaPosy < height -20 && bolaPosx > mouseX-raqLargo/2 && bolaPosx < mouseX+raqLargo/2 ) {
-
-      vely = vely * -1;
+    if ( bolaPosy > raqPosy-30 && bolaPosy < height -20) {
+      if (bolaPosx > mouseX-raqLargo/2 && bolaPosx < mouseX+raqLargo/2 ) {
+        vely = vely * -1;
+      }
     }
 
     // Si pelota toca la pared izquierda o derecha, cambiar dirección de x
