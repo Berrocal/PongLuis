@@ -7,12 +7,14 @@ float bolaPosy = 150;
 float velx = random(5, 10);
 float vely = random(5, 10);
 float diam=30;
+float radio=15;
+
 
 // variable raqueta
 float raqPosx = 0;
 float raqPosy = 0;
 int raqLargo = 150;
-
+int raqAncho = 10;
 
 void setup() {
 
@@ -33,7 +35,7 @@ void draw() {
 
   // Recta de la raqueta
   rectMode(CENTER);  // Set rectMode to CENTER
-  rect(mouseX, height-30, raqLargo, 10);
+  rect(mouseX, height-30, raqLargo, raqAncho);
 
 
   if (gameStart) {
@@ -44,20 +46,20 @@ void draw() {
 
 
     // Si pelota toca la raqueta, cambiar dirección de Y
-    if ( bolaPosy > raqPosy-30 && bolaPosy < height -20) {
+    if ( bolaPosy > raqPosy-radio && bolaPosy < raqPosy+radio) {
       if (bolaPosx > mouseX-raqLargo/2 && bolaPosx < mouseX+raqLargo/2 ) {
         vely = vely * -1;
       }
     }
 
     // Si pelota toca la pared izquierda o derecha, cambiar dirección de x
-    if (bolaPosx < 0 || bolaPosx > 500) {
+    if (bolaPosx - radio < 0 || bolaPosx + radio > 500) {
       velx = velx * -1.01;
       bolaPosx = bolaPosx + velx;
     }
 
     //  Si pelota toca la pared de arriba , cambiar dirección de Y
-    if ( bolaPosy < 0 ) {
+    if ( bolaPosy - radio  < 0 ) {
       vely = vely * -1;
       bolaPosy = bolaPosy + vely;
     }
@@ -77,4 +79,3 @@ void draw() {
 void mousePressed() {
   gameStart = !gameStart;
 }
-
