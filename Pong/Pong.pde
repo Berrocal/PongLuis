@@ -1,5 +1,8 @@
 boolean gameStart = false;
 
+//Variables juego
+int puntos = 0;
+int vidas = 3;
 
 // variables pelota
 float bolaPosx = 150;
@@ -36,7 +39,12 @@ void draw() {
   // Recta de la raqueta
   rectMode(CENTER);  // Set rectMode to CENTER
   rect(mouseX, height-30, raqLargo, raqAncho);
-
+  
+  // Texto
+  textAlign(RIGHT);
+text(vidas + " VIDAS", width-width/20, height/20);
+textAlign(LEFT);
+text("PUNTOS: " + puntos, width/20, height/20);
 
   if (gameStart) {
 
@@ -49,6 +57,7 @@ void draw() {
     if ( bolaPosy > raqPosy-radio && bolaPosy < raqPosy+radio) {
       if (bolaPosx > mouseX-raqLargo/2 && bolaPosx < mouseX+raqLargo/2 ) {
         vely = vely * -1;
+        puntos=puntos+1;
       }
     }
 
@@ -71,9 +80,16 @@ void draw() {
       bolaPosy = 150;
       velx = random(5, 10);
       vely = random(5, 10);
+      vidas = vidas - 1;
+     
+    }
+    if (vidas==0) {
+        textAlign(CENTER);
+       text("Final del Juego", width-width/20, height/20);
     }
   }
 }
+
 
 // Si se presiona el ratón, comienza el juego
 void mousePressed() {
