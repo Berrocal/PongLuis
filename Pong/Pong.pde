@@ -1,5 +1,3 @@
-//Luis López Berrocal
-
 float diamHit;
 int rightColor = 128;
 
@@ -16,7 +14,7 @@ float bolaPosx = 150;
 float bolaPosy = 150;
 float velx = random(5, 10);
 float vely = random(5, 10);
-float diam=30;
+float diam = 30;
 float radio = diam/2 ;
 
 
@@ -51,25 +49,33 @@ void draw() {
   case 2: 
     perder();
     break;
+    
+  case 3: 
+    ganar();
+    break;
 
 
   }
 }
 
 void menu() { //En este bloque dibujamos el HUD del menu principal
-  textFont(font1, height/4);  //Seleccionamos la fuente del texto            
-  fill(mouseX, mouseY, (mouseX+mouseY)/2);
-  textAlign(CENTER); //La alineacion del texto con la posicion que demos
-  text("PONG", width/2, height/4); //Dibujamos el string que queramos (PONG en este caso)
-  fill(mouseY, (mouseX+mouseY)/2, mouseX );
+  
+  textFont(font1, height/6);         // Fuente del texto            
+  fill(255, 255, 255);               // Color de Relleno
+  textAlign(CENTER);                 // Alineación del texto
+  text("PONG", width/2, height/4);   // Texto y coordenadas
+ 
+  fill(255, 255, 255);               
   rect(0, height/2, width, height/6);
+  
   textFont(font1, height/6); 
-  fill(mouseX, mouseY, (mouseX+mouseY)/2);
-  text("PLAY", width/2, height/2 + height/6 - height/50);
+  fill(random(0, 255),random(0, 255),random(0, 255));
+  text("PLAY", width/2, height/2 + height/6 - height/40);
+  
   textFont(font1, 16); 
-  fill(500);
-  textAlign(LEFT);
-  text("Miguel Granero", width-textWidth("Miguel Granero:"), height-16);
+  fill(255, 255, 255);
+  textAlign(RIGHT);
+  text("Luis López Berrocal", width-25 , height-20);
 }
 
 void juego() { //Dibujamos el HUD del juego
@@ -77,15 +83,35 @@ void juego() { //Dibujamos el HUD del juego
 }
 
 void perder() { //Al perder
-  textFont(font1, height/6);         
-  fill(mouseX, mouseY, (mouseX+mouseY)/2);
+  textFont(font1, height/6);    
+  
+  float x1 = map(mouseX, 0, 500, 0, 250);
+  float x2 = map(mouseY, 0, 500, 0, 250);
+  
+  fill(x1, x2, (x1+x2)/2);
   textAlign(CENTER);
-  text("PIERDES", width/2, height/4);   
-  textFont(font1, height/9); 
-  text("Pulsa 'r' para repetir ", width/2, height/2);   
-  text("o 'c' para salir ", width/2, height/2 + height/6); 
-  fill(mouseY, mouseX, (mouseX+mouseY)/2);
+  text("Final", width/2, height/4);   
+  textFont(font1, height/6); 
+  text("del Juego ", width/2, height/2);   
+   
+  fill((x1+x2)/2, x1, x2);
   text("Puntos: " + puntos, width/2, height - height/8);
+}
+
+void ganar() { //Al ganar
+  textFont(font1, height/6);    
+  
+  float x1 = map(mouseX, 0, 500, 0, 250);
+  float x2 = map(mouseY, 0, 500, 0, 250);
+  
+  fill(x1, x2, (x1+x2)/2);
+  textAlign(CENTER);
+  text("Has", width/2, height/4);   
+  textFont(font1, height/6); 
+  text("ganado", width/2, height/2);   
+   
+  fill((x1+x2)/2, x1, x2);
+  text("¡FELICIDADES!", width/2, height - height/8);
 }
 
 void mouseClicked() { //Al pulsar el raton
@@ -143,7 +169,9 @@ text("PUNTOS: " + puntos, width/20, height/20);
       if (bolaPosx > mouseX-raqLargo/2 && bolaPosx < mouseX+raqLargo/2 ) {
         vely = vely * -1;
         puntos=puntos+1;
-        raqLargo = raqLargo - 10;
+       if (raqLargo > 12) {
+         raqLargo = (raqLargo*90)/100 ;
+       }
      
       rightColor = 0;
       fill(random(0,128),random(0,128),random(0,128));
