@@ -37,7 +37,13 @@ void draw() {
 
 
   raqPosx = mouseX;
-  raq2Posx = mouseX;
+  
+  
+  if (keyPressed) {
+    if (key == 'a' || key == 'a') {
+     raq2Posx = raq2Posx + 1;
+      }
+      }
 
   // color del fondo
   background (125);
