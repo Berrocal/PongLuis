@@ -2,8 +2,11 @@
 
 //Variables juego
 boolean gameStart = false;
-int puntos = 0;
-int vidas = 3;
+int puntos1 = 0;
+int puntos2 = 0;
+int pantalla = 0;
+PFont font1;
+
 
 // variables pelota
 float bolaPosx = 150;
@@ -11,6 +14,8 @@ float bolaPosy = 150;
 float velx = random(3, 5);
 float vely = random(3, 5);
 float radio = 15 ;
+float diamHit;
+int rightColor = 128;
 
 // variable raqueta
 float raqPosx = 0;
@@ -19,7 +24,7 @@ int raqLargo = 150;
 int raqAncho = 10;
 
 // variable raqueta 2
-float raq2Posx = 0;
+float raq2Posx = 250;
 float raq2Posy = 0;
 int raq2Largo = 150;
 int raq2Ancho = 10;
@@ -30,23 +35,132 @@ void setup() {
   size(500, 500);    // tamaño pantalla
   raqPosy = height -30;
   raq2Posy = height -470;
+  
+   font1 = createFont("Arial", 16, true); //Creamos una fuente para las letras
 }
 
 
-void draw() {
 
+void draw() {
+  background(125); //Limpiamos la pantalla
+  switch (pantalla) { //Dibujamos una cosa u otra dependiendo del estado del juego
+  case 0: 
+    menu();
+    break;
+
+  case 1: 
+    juego();
+    break;
+
+ case 2: 
+    instrucciones();
+    break;
+   
+    }
+}
+  /* case 3: 
+    gana1();
+    break;
+
+ case 3: 
+    gana2();
+    break;
+  }
+}
+*/
+
+void menu() { //En este bloque dibujamos el HUD del menu principal
+  
+  textFont(font1, height/6);         // Fuente del texto            
+  fill(255, 255, 255);               // Color de Relleno
+  textAlign(CENTER);                 // Alineación del texto
+  text("PONG", width/2, height/4);   // Texto y coordenadas
+ 
+  fill(255, 255, 255);               
+  rect(0, height/2, width, height/6);
+  
+  textFont(font1, height/6); 
+  fill(random(0, 255),random(0, 255),random(0, 255));
+  text("PLAY", width/2, height/2 + height/6 - height/40);
+  
+  textFont(font1, 16); 
+  fill(255, 255, 255);
+  textAlign(RIGHT);
+  text("Luis López Berrocal", width-25 , height-20);
+  
+  textFont(font1, 30); 
+  fill(255, 255, 255);
+  textAlign(RIGHT);
+  text("Instrucciones", width-300 , height-20);
+}
+
+void instrucciones() { //En este bloque dibujamos el HUD del menu principal
+  
+  textFont(font1, 20);         // Fuente del texto            
+  fill(255, 255, 255);               // Color de Relleno
+  textAlign(CENTER);                 // Alineación del texto
+  text("El jugador 1 se moverá mediante el ratón", width/2, height/4);   // Texto y coordenadas
+ 
+ textFont(font1, 20);         // Fuente del texto            
+  fill(255, 255, 255);               // Color de Relleno
+  textAlign(CENTER);                 // Alineación del texto
+  text("El jugador 2 se moverá mediante los botones A y D", width/2, height-175);   // Texto y coordenadas
+ 
+ textFont(font1, 30); 
+  fill(255, 255, 255);
+  textAlign(RIGHT);
+  text("Volver", width-300 , height-20);
+}
+
+void juego() { //Dibujamos el HUD del juego
+  Pong();
+}
+
+
+// Si se presiona el ratón, comienza el juego
+void mousePressed() {
+  gameStart = !gameStart;
+  
+    if (mouseY < height/2 + height/6 && mouseY > height/2 && pantalla == 0) {
+    pantalla=1; //Si pulsamos el boton del menu entramos al juego
+  }
+     if (mouseY < height && mouseY > height-40) {
+       if(pantalla==0) pantalla = 2;
+       else if(pantalla == 2) pantalla = 0;
+   
+  }
+
+}
+
+
+
+void Pong() {
 
   raqPosx = mouseX;
-  
+ 
   
   if (keyPressed) {
     if (key == 'a' || key == 'a') {
-     raq2Posx = raq2Posx + 1;
+     raq2Posx = raq2Posx - 8;
       }
       }
 
+if (keyPressed) {
+    if (key == 'd' || key == 'd') {
+     raq2Posx = raq2Posx + 8;
+      }
+      }
+      
+     
   // color del fondo
   background (125);
+  
+   // Texto
+   
+textAlign(RIGHT);
+text("Puntos: " + puntos2, width-width/20, height-450);
+textAlign(LEFT);
+text("Puntos: " + puntos1, width/20, height-50);
 
   // Pelota coordenadas y color
   fill(255, 255, 255);
@@ -71,17 +185,32 @@ void draw() {
     if ( bolaPosy+radio+raqAncho/2 > raqPosy && bolaPosy+radio < raqPosy) {
       if (bolaPosx > raqPosx-raqLargo/2 && bolaPosx < raqPosx+raqLargo/2 ) {
         vely = vely * -1;
-        puntos=puntos+1;
       }
+      
+        if (raqLargo < 20) {
+         raqLargo = (raqLargo*90)/100 ;
+       }
+     
+      rightColor = 0;
+      fill(random(0,128),random(0,128),random(0,128));
+      diamHit = random(75,150);
+ellipse(bolaPosx, bolaPosy,diamHit,diamHit);
     }
 
     // ARRIBA
     // Si pelota toca la raqueta 2, cambiar dirección de Y
     if ( bolaPosy-radio< raq2Posy+raq2Ancho/2  && bolaPosy-radio > raq2Posy-raq2Ancho/2) {
       if (bolaPosx > raq2Posx-raq2Largo/2 && bolaPosx < raq2Posx+raq2Largo/2 ) {
-        vely = vely * -1;
-        puntos=puntos+1;
+        vely = vely * -1; 
       }
+        if (raq2Largo < 20) {
+         raq2Largo = (raq2Largo*90)/100 ;
+       }
+     
+      rightColor = 0;
+      fill(random(0,128),random(0,128),random(0,128));
+      diamHit = random(75,150);
+ellipse(bolaPosx, bolaPosy,diamHit,diamHit);
     }
 
 
@@ -92,35 +221,26 @@ void draw() {
       bolaPosx = bolaPosx + velx;
     }
 
-    //  Si pelota toca la pared de arriba , cambiar dirección de Y
-    if ( bolaPosy - radio  < 0 ) {
-      vely = vely * -1;
-      bolaPosy = bolaPosy + vely;
-    }
-    //  Si pelota toca la pared de abajo , parar el juego y asignar nuevos valores a las velocidades de X e Y
+  
+    //  Si pelota toca la pared de abajo o la de arriba , parar el juego y asignar nuevos valores a las velocidades de X e Y
 
     if (bolaPosy > height) {
       gameStart = false;
       bolaPosx = 150;
       bolaPosy = 150;
-      velx = random(5, 10);
-      vely = random(5, 10);
-      vidas = vidas - 1;
+      velx = random(3, 5);
+      vely = random(3, 5);
+      puntos2 = puntos2 + 1;
     }
     
-  }
- 
-  if (vidas==0) {
-    textAlign(CENTER);
-    text("Final del Juego", width/2, height/2);
-    puntos=0;
-  }
+    if (bolaPosy < 0) {
+      gameStart = false;
+      bolaPosx = 150;
+      bolaPosy = 150;
+      velx = random(3, 5);
+      vely = random(3, 5);
+      puntos1 = puntos1 + 1;
+    }
+
 }
-
-
-// Si se presiona el ratón, comienza el juego
-void mousePressed() {
-  gameStart = !gameStart;
 }
-
-
