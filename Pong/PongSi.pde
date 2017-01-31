@@ -1,4 +1,6 @@
+//Luis López Berrocal
 
+//Pong
 
 //Variables juego
 boolean gameStart = false;
@@ -56,19 +58,16 @@ void draw() {
     instrucciones();
     break;
    
-    }
-}
-  /* case 3: 
+  case 3: 
     gana1();
     break;
-
- case 3: 
+ case 4: 
     gana2();
     break;
   }
 }
-*/
 
+// Pantallas
 void menu() { //En este bloque dibujamos el HUD del menu principal
   
   textFont(font1, height/6);         // Fuente del texto            
@@ -116,6 +115,37 @@ void juego() { //Dibujamos el HUD del juego
   Pong();
 }
 
+void gana1() { //Al ganar
+  textFont(font1, height/6);    
+  
+  float x1 = map(mouseX, 0, 500, 0, 250);
+  float x2 = map(mouseY, 0, 500, 0, 250);
+  
+  fill(x1, x2, (x1+x2)/2);
+  textAlign(CENTER);
+  text("Has", width/2, height/4);   
+  textFont(font1, height/6); 
+  text("ganado", width/2, height/2);   
+   
+  fill((x1+x2)/2, x1, x2);
+  text("¡FELICIDADES!", width/2, height - height/8);
+}
+
+void gana2() { //Al ganar
+  textFont(font1, height/6);    
+  
+  float x1 = map(mouseX, 0, 500, 0, 250);
+  float x2 = map(mouseY, 0, 500, 0, 250);
+  
+  fill(x1, x2, (x1+x2)/2);
+  textAlign(CENTER);
+  text("Has", width/2, height/4);   
+  textFont(font1, height/6); 
+  text("ganado", width/2, height/2);   
+   
+  fill((x1+x2)/2, x1, x2);
+  text("¡FELICIDADES!", width/2, height - height/8);
+}
 
 // Si se presiona el ratón, comienza el juego
 void mousePressed() {
@@ -138,6 +168,7 @@ void Pong() {
 
   raqPosx = mouseX;
  
+  //Mover mediantes A y B
   
   if (keyPressed) {
     if (key == 'a' || key == 'a') {
@@ -191,6 +222,7 @@ text("Puntos: " + puntos1, width/20, height-50);
          raqLargo = (raqLargo*90)/100 ;
        }
      
+     // Efecto de color
       rightColor = 0;
       fill(random(0,128),random(0,128),random(0,128));
       diamHit = random(75,150);
@@ -207,6 +239,7 @@ ellipse(bolaPosx, bolaPosy,diamHit,diamHit);
          raq2Largo = (raq2Largo*90)/100 ;
        }
      
+     // Efecto de color
       rightColor = 0;
       fill(random(0,128),random(0,128),random(0,128));
       diamHit = random(75,150);
@@ -233,7 +266,7 @@ ellipse(bolaPosx, bolaPosy,diamHit,diamHit);
       puntos2 = puntos2 + 1;
     }
     
-    if (bolaPosy < 0) {
+    if (bolaPosy < 0) { 
       gameStart = false;
       bolaPosx = 150;
       bolaPosy = 150;
@@ -243,4 +276,15 @@ ellipse(bolaPosx, bolaPosy,diamHit,diamHit);
     }
 
 }
+// Si gana jugador 1
+ if (puntos1==8) {
+    
+pantalla=3;
+}
+// Si gana jugador 2
+ if (puntos2==8) {
+    
+pantalla=4;
+}
+
 }
