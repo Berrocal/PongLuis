@@ -210,7 +210,7 @@ text("Puntos: " + puntos1, width/20, height-50);
         vely = vely * -1;
       }
       
-        if (raqLargo < 20) {
+        if (raqLargo > 18) {
          raqLargo = (raqLargo*90)/100 ;
        }
      
@@ -227,7 +227,7 @@ ellipse(bolaPosx, bolaPosy,diamHit,diamHit);
       if (bolaPosx > raq2Posx-raq2Largo/2 && bolaPosx < raq2Posx+raq2Largo/2 ) {
         vely = vely * -1; 
       }
-        if (raq2Largo < 20) {
+        if (raq2Largo > 18) {
          raq2Largo = (raq2Largo*90)/100 ;
        }
      
