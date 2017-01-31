@@ -1,5 +1,4 @@
 //Luis López Berrocal
-
 //Pong
 
 //Variables juego
@@ -8,7 +7,6 @@ int puntos1 = 0;
 int puntos2 = 0;
 int pantalla = 0;
 PFont font1;
-
 
 // variables pelota
 float bolaPosx = 150;
@@ -40,7 +38,6 @@ void setup() {
   
    font1 = createFont("Arial", 16, true); //Creamos una fuente para las letras
 }
-
 
 
 void draw() {
@@ -157,12 +154,8 @@ void mousePressed() {
      if (mouseY < height && mouseY > height-40) {
        if(pantalla==0) pantalla = 2;
        else if(pantalla == 2) pantalla = 0;
-   
   }
-
 }
-
-
 
 void Pong() {
 
@@ -211,7 +204,6 @@ text("Puntos: " + puntos1, width/20, height-50);
     bolaPosx = bolaPosx + velx;
     bolaPosy = bolaPosy + vely;
 
-
     // Si pelota toca la raqueta 1, cambiar dirección de Y
     if ( bolaPosy+radio+raqAncho/2 > raqPosy && bolaPosy+radio < raqPosy) {
       if (bolaPosx > raqPosx-raqLargo/2 && bolaPosx < raqPosx+raqLargo/2 ) {
@@ -246,14 +238,11 @@ ellipse(bolaPosx, bolaPosy,diamHit,diamHit);
 ellipse(bolaPosx, bolaPosy,diamHit,diamHit);
     }
 
-
-
     // Si pelota toca la pared izquierda o derecha, cambiar dirección de x
     if (bolaPosx - radio < 0 || bolaPosx + radio > 500) {
       velx = velx * -1.01;
       bolaPosx = bolaPosx + velx;
     }
-
   
     //  Si pelota toca la pared de abajo o la de arriba , parar el juego y asignar nuevos valores a las velocidades de X e Y
 
@@ -274,17 +263,13 @@ ellipse(bolaPosx, bolaPosy,diamHit,diamHit);
       vely = random(3, 5);
       puntos1 = puntos1 + 1;
     }
-
 }
 // Si gana jugador 1
- if (puntos1==8) {
-    
+ if (puntos1==8) { 
 pantalla=3;
 }
 // Si gana jugador 2
  if (puntos2==8) {
-    
 pantalla=4;
 }
-
 }
